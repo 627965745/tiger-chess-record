@@ -36,3 +36,48 @@
     transform: rotate(360deg);
   }
 }
+
+
+.item-enter-enter {
+  opacity: 0;
+  transform: translateX(0);
+}
+
+.item-enter-enter-active {
+  opacity: 1;
+  transform: translateX(0);
+  transition: opacity 500ms, transform 500ms;
+}
+
+.item-exit-enter {
+  opacity: 0;
+  transform: translateX(0);
+}
+
+.item-exit-enter-active {
+  opacity: 1;
+  transform: translateX(0);
+  transition: opacity 500ms, transform 500ms;
+}
+
+.item-enter-exit {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.item-enter-exit-active {
+  opacity: 0;
+  transform: translateX(100%);
+  transition: opacity 500ms, transform 500ms;
+}
+
+.item-exit-exit {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.item-exit-exit-active {
+  opacity: 0;
+  transform: translateX(-100%);
+  transition: opacity 500ms, transform 500ms;
+}

@@ -45,6 +45,7 @@ const PlayersTable = () => {
             {
                 Header: "ID",
                 accessor: "player_id",
+                Cell: ({ row }) => row.index + 1,
             },
             {
                 Header: "名字",

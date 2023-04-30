@@ -56,10 +56,10 @@ const Game = ({ game, getAllGamesByStreamid }) => {
     };
 
     const toggleRounds = () => {
-        // let oldTime = (new Date(game.game_time)).getTime();
-        // let curTime = new Date(oldTime).format("yyyy-MM-dd");
+        if (showRounds === false) {getRounds()}
         setShowRounds(!showRounds);
         setShowDetails(false);
+        
     };
 
     const toggleNewRounds = () => {

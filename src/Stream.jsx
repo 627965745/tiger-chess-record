@@ -33,6 +33,7 @@ const Stream = ({ stream, getAllStreams }) => {
     };
 
     const toggleGames = () => {
+        if (showGames === false) {getAllGamesByStreamid(stream.stream_id)}
         setShowGames(!showGames);
         setShowDetails(false);
     };

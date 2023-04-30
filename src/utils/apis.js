@@ -1,6 +1,7 @@
 import axios from "axios";
 
 axios.defaults.baseURL = "http://localhost/api/index.php";
+axios.defaults.withCredentials = true;
 const config = {
   headers: {
     "Access-Control-Allow-Origin": "*",
@@ -13,6 +14,10 @@ const config = {
 const options = {
 	headers: {"content-type": "application/json"}
 }
+
+export const login = (password) => axios.post('/login', { password } );
+
+export const checkSession = () => axios.get("/checkSession");
 
 export const getPlayers = () => axios.get("/getPlayers");
 

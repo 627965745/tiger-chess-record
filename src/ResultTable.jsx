@@ -69,6 +69,7 @@ const ResultTable = ({ tableContent, id }) => {
             {
                 Header: "名字",
                 accessor: "player_name",
+                width: 250,
             },
             {
                 Header: "总成绩/份",
@@ -79,6 +80,8 @@ const ResultTable = ({ tableContent, id }) => {
                       {
                           Header: "参与次数",
                           accessor: "rounds_played",
+                          width: 250,
+                          Cell: ({ cell, row }) => `${cell.value} (赢${row.original.rounds_win}输${row.original.rounds_lose})`,
                       },
                   ]
                 : []),
@@ -130,6 +133,7 @@ const ResultTable = ({ tableContent, id }) => {
                                             background: "aliceblue",
                                             color: "black",
                                             fontWeight: "bold",
+                                            width: column.width,
                                         }}
                                     >
                                         {column.render("Header")}
@@ -169,9 +173,13 @@ const ResultTable = ({ tableContent, id }) => {
                                         {...column.getFooterProps()}
                                         key={index}
                                     >
-                                        {index === 1
-                                            ? `粉丝总计输赢: ${data.reduce((acc, round) => acc + parseInt(round.stakes_won), 0)}`
+                                        {index === 0
+                                            ? "总计输赢:"
                                             : ""}
+                                        {index === 1
+                                            ? `${data.reduce((acc, round) => acc + parseInt(round.stakes_won), 0)}份`
+                                            : ""}
+                                            
                                     </td>
                                 ))}
                             </tr>

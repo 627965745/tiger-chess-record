@@ -109,7 +109,7 @@ const NewGame = ({game_id, getRounds, toggleNewRounds}) => {
                         placeholder="蓝40，绿39..."
                     />
                 </div>
-            <div className="bg-blue-200 p-1 mb-1 rounded col-span-4 sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/6">
+            <div className="bg-blue-200 p-1 mb-1 rounded col-span-4 mx-5">
                 <h2 className="mb-1">玩家列表（点击参与的玩家）</h2>
                 <div className="col-span-4 mb-2">
                     <label htmlFor="filter-input">搜索玩家：</label>
@@ -133,7 +133,7 @@ const NewGame = ({game_id, getRounds, toggleNewRounds}) => {
             ))}
                 
             </div>
-            <div className="bg-green-200 p-4 mt-4 rounded col-span-4 sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/6">
+            <div className="bg-green-200 p-4 mt-4 rounded col-span-4 mx-5">
                 <h2 className="mb-4">已选玩家（点击玩家取消参与）</h2>
 
                 {selectedPlayers.map((player) => (

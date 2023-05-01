@@ -69,7 +69,7 @@ const ResultTable = ({ tableContent, id }) => {
             {
                 Header: "名字",
                 accessor: "player_name",
-                width: 350,
+                width: 250,
             },
             {
                 Header: "总份",
@@ -120,7 +120,7 @@ const ResultTable = ({ tableContent, id }) => {
             <div className="col-span-1">
                 <table
                     {...getTableProps()}
-                    style={{ border: "solid 1px blue", width: "300px" }}
+                    style={{ border: "solid 1px blue", width: "400px" }}
                 >
                     <thead>
                         {headerGroups.map((headerGroup) => (

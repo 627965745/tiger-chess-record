@@ -69,18 +69,19 @@ const ResultTable = ({ tableContent, id }) => {
             {
                 Header: "名字",
                 accessor: "player_name",
-                width: 250,
+                width: 100,
             },
             {
                 Header: "总份",
                 accessor: "stakes_won",
+                width: 50,
             },
             ...(tableContent !== "round"
                 ? [
                       {
                           Header: "参与次数",
                           accessor: "rounds_played",
-                          width: 400,
+                        //   width: 400,
                           Cell: ({ cell, row }) => `${cell.value}->赢${row.original.rounds_win}输${row.original.rounds_lose}=${row.original.rounds_win-row.original.rounds_lose}`,
                       },
                   ]
@@ -120,7 +121,7 @@ const ResultTable = ({ tableContent, id }) => {
             <div className="col-span-1">
                 <table
                     {...getTableProps()}
-                    style={{ border: "solid 1px blue", width: "400px" }}
+                    style={{ border: "solid 1px blue", width: "320px" }}
                 >
                     <thead>
                         {headerGroups.map((headerGroup) => (

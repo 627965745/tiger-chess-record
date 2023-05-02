@@ -70,7 +70,10 @@ const NewGame = ({game_id, getRounds, toggleNewRounds}) => {
         }
     };
 
-
+    const addGameName = (e) => {
+        setGameName(gameName + e.target.innerText)
+        
+    }
 
     const addNewRound = async (e) => {
         const newRoundDetail = {game_id : game_id, round_name : gameName, players: selectedPlayers}
@@ -99,17 +102,97 @@ const NewGame = ({game_id, getRounds, toggleNewRounds}) => {
     return (
         <div className="grid grid-cols-4 gap-4 justify-items-center">
             <div className="col-span-4 mt-2">
-                    <label htmlFor="filter-input" className="font-bold">输入内容：</label>
+            <button
+                    className="bg-blue-500 py-1 px-2 m-1 cursor-pointer rounded text-white "
+                    onClick={addGameName}
+                >
+                    蓝
+                </button>
+                <button
+                    className="bg-orange-500 py-1 px-2 m-1 cursor-pointer rounded text-white"
+                    onClick={addGameName}
+                >
+                    橙
+                </button>
+                <button
+                    className="bg-green-500 py-1 px-2 m-1 cursor-pointer rounded text-white"
+                    onClick={addGameName}
+                >
+                    绿
+                </button>
+                <button
+                    className="bg-purple-500 py-1 px-2 m-1 cursor-pointer rounded text-white"
+                    onClick={addGameName}
+                >
+                    紫
+                </button>
+                <button
+                    className="bg-indigo-600 py-1 px-2 m-1 cursor-pointer rounded text-white"
+                    onClick={addGameName}
+                >
+                    40
+                </button>
+                <button
+                    className="bg-indigo-500 py-1 px-2 m-1 cursor-pointer rounded text-white"
+                    onClick={addGameName}
+                >
+                    39
+                </button>
+                <button
+                    className="bg-indigo-400 py-1 px-2 m-1 cursor-pointer rounded text-white"
+                    onClick={addGameName}
+                >
+                    38
+                </button>
+                <button
+                    className="bg-indigo-300 py-1 px-2 m-1 cursor-pointer rounded text-white"
+                    onClick={addGameName}
+                >
+                    37
+                </button>
+                <button
+                    className="bg-pink-500 py-1 px-2 m-1 cursor-pointer rounded text-white"
+                    onClick={addGameName}
+                >
+                    双
+                </button>
+                <button
+                    className="bg-red-600 py-1 px-2 m-1 cursor-pointer rounded text-white"
+                    onClick={addGameName}
+                >
+                    炸
+                </button>
+                <button
+                    className="bg-yellow-800 py-1 px-2 m-1 cursor-pointer rounded text-white"
+                    onClick={addGameName}
+                >
+                    雷
+                </button>
+                <button
+                    className="bg-yellow-500 py-1 px-2 m-1 cursor-pointer rounded text-white"
+                    onClick={addGameName}
+                >
+                    兵
+                </button>
+                </div>
+                <div className="col-span-4">
+                    <label htmlFor="filter-input" className="font-bold">内容：</label>
                     <input
                         type="text"
                         id="filter-input"
-                        className="border-2 border-blue-300 mx-1"
+                        className="border-2 border-blue-300 mx-1 w-1/2"
                         value={gameName}
                         onChange={(e)=>{setGameName(e.target.value)}}
                         placeholder="蓝40，绿39..."
                     />
+                    <button
+                    className="bg-red-500 py-1 px-2 cursor-pointer rounded text-white"
+                    onClick={()=> {setGameName("")}}
+                >
+                    X
+                </button>
                 </div>
-            <div className="bg-blue-200 p-1 mb-1 rounded col-span-4 mx-5">
+            <div className="bg-blue-200 p-1 mb-1 rounded col-span-4 mx-1">
                 <h2 className="mb-1">玩家列表（点击参与的玩家）</h2>
                 <div className="col-span-4 mb-2">
                     <label htmlFor="filter-input">搜索玩家：</label>

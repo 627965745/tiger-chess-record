@@ -24,7 +24,7 @@ const Pk = () => {
     };
 
     const getAllStreams = async () => {
-        const response = await getStreams()
+       await getStreams()
             .then((response) => {
                 if (response.status !== 200) {
                     console.error("抓取直播失败:", response.data.message);

@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { editRoundStatus, deleteRoundByRoundid } from "./utils/apis";
 import ResultTable from "./ResultTable";
+import NewGame from "./NewGame";
 
 const Round = ({ round, getRounds }) => {
+    const scrollToDetails = useRef(null);
     const [showPlayers, setShowPlayers] = useState(false);
     const [showStatusOption, setShowStatusOption] = useState(false);
     const [showDeleteRound, setShowDeleteRound] = useState(false);
@@ -10,6 +12,7 @@ const Round = ({ round, getRounds }) => {
     const tableContent = "round";
 
     const togglePlayers = () => {
+        setShowDetails(false);
         setShowPlayers(!showPlayers);
     };
 
@@ -17,6 +20,17 @@ const Round = ({ round, getRounds }) => {
         setShowDetails(false);
         setShowStatusOption(!showStatusOption);
     };
+
+    const scrollToElement = () => {
+        if (scrollToDetails.current) {
+          const elementPosition = scrollToDetails.current.getBoundingClientRect();
+          const viewportHeight = window.innerHeight;
+          const middleOffset = (viewportHeight - elementPosition.height) / 2;
+          const scrollToPosition = elementPosition.top + window.pageYOffset - middleOffset;
+    
+          window.scrollTo({ top: scrollToPosition, behavior: 'smooth' });
+        }
+      };
 
     const changeRoundStatus = async (e) => {
         
@@ -91,24 +105,14 @@ const Round = ({ round, getRounds }) => {
                     </button>
                 )}
             </div>
-            <div className="col-span-4 text-center">
-                <div
+            <div ref={scrollToDetails} className="col-span-4 text-center">
+                <button
                     className="text-gray-600 hover:text-gray-800 py-1 font-bold"
                     onClick={togglePlayers}
                 >
                     {round.round_name} - 共{round.num_players}
                     人{round.total_stake}份 - {round.player_names}
-                </div>
-                {/* {showPlayers && (
-        <ul className="pl-6 list-disc">
-          {round.players.map((player, index) => (
-            <li key={index} className="py-1">
-              {player.playerName} - {player.roundStake} -{" "}
-              {player.ifWin ? "Won" : "Lost"}
-            </li>
-          ))}
-        </ul>
-      )} */}
+                </button>
             </div>
             <div className="col-span-1 text-center">
                 {showDeleteRound ? (
@@ -128,7 +132,7 @@ const Round = ({ round, getRounds }) => {
                     </>
                 ) : (
                     <button
-                        className="bg-red-800 hover:bg-red-900 text-white font-bold py-1 px-2 rounded m-1 text-s"
+                        className="bg-red-800 hover:bg-red-900 text-white font-bold py-1 px-2 rounded m-1 text-xs"
                         onClick={() => setShowDeleteRound(true)}
                     >
                         删除
@@ -136,7 +140,7 @@ const Round = ({ round, getRounds }) => {
                 )}
                 <button
                     className="text-white font-bold px-3 py-3 rounded bg-indigo-500"
-                    onClick={() => setShowDetails(!showDetails)}
+                    onClick={() => {setShowDetails(!showDetails);setShowPlayers(false);}}
                 >
                     报告
                 </button>
@@ -144,6 +148,19 @@ const Round = ({ round, getRounds }) => {
             {showDetails && (
                 <div className="col-span-6 text-center py-1">
                     <ResultTable tableContent = {tableContent} id={round.round_id}/>
+                </div>
+            )}
+            {showPlayers && (
+                
+                <div className="col-span-6 text-center py-1">
+                    <div className=""><p>再次点击可取消修改</p></div>
+                    <NewGame
+                            game_id={round.game_id}
+                            getRounds={getRounds}
+                            setShowPlayers={setShowPlayers}
+                            round={round}
+                            scrollToDetails={scrollToElement}
+                        />
                 </div>
             )}
         </div>

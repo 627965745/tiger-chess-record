@@ -56,10 +56,11 @@ const Game = ({ game, getAllGamesByStreamid }) => {
     };
 
     const toggleRounds = () => {
-        if (showRounds === false) {getRounds()}
+        if (showRounds === false) {
+            getRounds();
+        }
         setShowRounds(!showRounds);
         setShowDetails(false);
-        
     };
 
     const toggleNewRounds = () => {
@@ -127,35 +128,36 @@ const Game = ({ game, getAllGamesByStreamid }) => {
                 </>
             )}
 
-
-
-            {showRounds && (
-                <div>
+            <div>
+                {showRounds && (
                     <button
                         className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4"
                         onClick={toggleNewRounds}
                     >
                         干
                     </button>
-                    <div className={!showNewRounds ? "hidden" : undefined}>
+                )}
+                {showNewRounds && (
+                    <div>
                         <NewGame
                             game_id={game.game_id}
                             getRounds={getRounds}
                             toggleNewRounds={toggleNewRounds}
                         />
                     </div>
+                )}
 
-                    {rounds.map((round) => (
+                {showRounds &&
+                    rounds.map((round) => (
                         <Round
                             key={round.round_id}
                             round={round}
                             getRounds={getRounds}
                         />
                     ))}
-                </div>
-            )}
+            </div>
 
-{showDetails && (
+            {showDetails && (
                 <div className="col-span-6 text-center py-1">
                     <ResultTable
                         tableContent={tableContent}

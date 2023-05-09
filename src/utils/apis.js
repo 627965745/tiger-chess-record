@@ -41,6 +41,8 @@ export const addStream = () => axios.post('/addStream');
 
 export const addRound = (roundDetail) => axios.post('/addRound', roundDetail);
 
+export const editRound = (roundDetail) => axios.put('/editRound', roundDetail);
+
 export const editPlayer = (player) => axios.put('/editPlayer', player);
 
 export const editRoundStatus = (status) => axios.put('/editRoundStatus', status);

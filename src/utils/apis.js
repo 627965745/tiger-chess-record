@@ -1,6 +1,6 @@
 import axios from "axios";
 
-axios.defaults.baseURL = "http://localhost/api/index.php";
+axios.defaults.baseURL = process.env.REACT_APP_API_BASE_URL;
 axios.defaults.withCredentials = true;
 const config = {
   headers: {
@@ -22,6 +22,8 @@ export const checkSession = () => axios.get("/checkSession");
 export const getPlayers = () => axios.get("/getPlayers");
 
 export const getStreams = () => axios.get("/getStreams");
+
+export const getRoundsByStreamidAndPlayerid = (streamPlayer) => axios.get('/getRoundsByStreamidAndPlayerid', { params: { streamPlayer } } );
 
 export const getGamesByStreamid = (streamid) => axios.get('/getGamesByStreamid', { params: { streamid } });
 

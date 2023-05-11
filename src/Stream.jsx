@@ -20,16 +20,15 @@ const Stream = ({ stream, getAllStreams }) => {
     }, []);
 
     const getAllGamesByStreamid = async (stream_id) => {
-        const response = await getGamesByStreamid(stream_id)
+        await getGamesByStreamid(stream_id)
             .then((response) => {
                 if (response.status !== 200) {
-                    console.error("更新失败:", response.data.message);
+                    console.error("获取棋局失败:", response.data.message);
                 } else {
                     setGames(response.data);
-                    // setLoading(false);
                 }
             })
-            .catch((error) => console.error("更新失败:", error.message));
+            .catch((error) => console.error("获取棋局失败:", error.message));
     };
 
     const toggleGames = () => {

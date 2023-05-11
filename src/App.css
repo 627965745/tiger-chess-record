@@ -36,7 +36,10 @@
     transform: rotate(360deg);
   }
 }
-
+.noScroll {
+  overflow: hidden;
+  height: 100%;
+}
 
 .item-enter-enter {
   opacity: 0;

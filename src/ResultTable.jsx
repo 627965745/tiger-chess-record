@@ -53,6 +53,14 @@ const ResultTable = ({ tableContent, id }) => {
         { game_time: "", round_name: "", round_stakes: "", round_status: "" },
     ]);
 
+    useEffect(() => {
+        if (playerRoundsIsOpen) {
+          document.body.classList.add('noScroll');
+        } else {
+          document.body.classList.remove('noScroll');
+        }
+      }, [playerRoundsIsOpen]);
+
     const handleNameClick = async (player) => {
         setModalDetail(player);
         const streamPlayer = {

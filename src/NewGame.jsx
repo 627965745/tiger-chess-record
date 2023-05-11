@@ -21,7 +21,6 @@ const NewGame = ({
     const [showMessage, setShowMessage] = useState(false);
     useEffect(() => {
         getAllPlayers();
-        console.log(round);
         if (round !== undefined) {
             setGameName(round.round_name);
             setcurrentPlayers(

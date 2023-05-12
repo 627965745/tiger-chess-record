@@ -208,15 +208,17 @@ const ResultTable = ({ tableContent, id }) => {
                 isOpen={playerRoundsIsOpen}
                 onRequestClose={() => setPlayerRoundsIsOpen(false)}
                 contentLabel="参与记录"
-                className={""}
                 style={{
-                    content: {
+                    overlay: {
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                      },
+                      content: {
                         width: "320px",
-                        display: "flex",
-                        flexDirection: "column",
-                        justifyContent: "center",
-                        alignItems: "center",
+                        WebkitOverflowScrolling: 'touch',
                         height: "100vh",
+                        
                         top: "50%",
                         left: "50%",
                         transform: "translate(-50%, -50%)",

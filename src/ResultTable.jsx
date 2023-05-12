@@ -55,11 +55,11 @@ const ResultTable = ({ tableContent, id }) => {
 
     useEffect(() => {
         if (playerRoundsIsOpen) {
-          document.body.classList.add('noScroll');
+            document.body.classList.add("noScroll");
         } else {
-          document.body.classList.remove('noScroll');
+            document.body.classList.remove("noScroll");
         }
-      }, [playerRoundsIsOpen]);
+    }, [playerRoundsIsOpen]);
 
     const handleNameClick = async (player) => {
         setModalDetail(player);
@@ -148,8 +148,10 @@ const ResultTable = ({ tableContent, id }) => {
                 Header: "名字",
                 accessor: "player_name",
                 width: 100,
-                Cell: ({ cell, row }) => (
-                    <button
+                Cell: ({ cell, row }) => {
+                    if (tableContent === 'stream') {
+                        return (
+                            <button
                         style={{
                             background: "none",
                             border: "none",
@@ -161,7 +163,12 @@ const ResultTable = ({ tableContent, id }) => {
                     >
                         {cell.value}
                     </button>
-                ),
+                        )
+                    } else {
+                        return <span>{cell.value}</span>
+                    }
+                    
+                },
             },
             {
                 Header: "总份",
@@ -210,19 +217,19 @@ const ResultTable = ({ tableContent, id }) => {
                 contentLabel="参与记录"
                 style={{
                     overlay: {
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                      },
-                      content: {
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                    },
+                    content: {
+                        position: 'fixed',
                         width: "320px",
-                        WebkitOverflowScrolling: 'touch',
+                        WebkitOverflowScrolling: "touch",
                         height: "100vh",
-                        
+                        maxHeight: '98vh',
                         top: "50%",
                         left: "50%",
                         transform: "translate(-50%, -50%)",
-
                         borderRadius: "6px",
                         padding: "10px",
                         overflow: "auto",
@@ -231,7 +238,7 @@ const ResultTable = ({ tableContent, id }) => {
             >
                 <div className="grid grid-flow-row justify-items-center items-center">
                     <div className="font-bold text-blue-600 hover:text-blue-800 ">
-                        <p className="text-xl text-center">
+                        <p className="text-xl text-center mt-20">
                             参与记录
                             <button
                                 className="ml-2 bg-blue-500 hover:bg-blue-700 text-white font-bold text-base py-1 px-2 rounded -mb-1"
@@ -267,7 +274,7 @@ const ResultTable = ({ tableContent, id }) => {
                         </p>
                     </div>
 
-                    <div className="font-bold text-lg mt-5">
+                    <div className="font-bold text-lg mt-5 mb-16">
                         {playerRounds.map((round) => (
                             <div className="">
                                 <p>

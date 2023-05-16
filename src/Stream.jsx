@@ -6,6 +6,11 @@ import {
     addGameByStreamid,
 } from "./utils/apis";
 import ResultTable from "./ResultTable";
+import { formatDate } from "./utils/dateutil";
+import { ReactComponent as Baogao } from './utils/icons/baogao.svg';
+import { ReactComponent as Shanchu } from './utils/icons/shanchu.svg';
+import { ReactComponent as Dui } from './utils/icons/dui.svg';
+import { ReactComponent as Cuo } from './utils/icons/cuo.svg';
 
 const Stream = ({ stream, getAllStreams }) => {
     const [showGames, setShowGames] = useState(false);
@@ -72,48 +77,50 @@ const Stream = ({ stream, getAllStreams }) => {
                 className="font-bold text-blue-600 hover:text-blue-800"
                 onClick={toggleGames}
             >
-                直播时间： {stream.stream_time}
+                直播：{formatDate(new Date(new Date(stream.stream_time).getTime()),"MM-dd hh:mm:ss")}{}
             </button>
 
             {showDeleteStream ? (
                 <>
-                    <button
-                        className="bg-red-800 hover:bg-red-700 text-white font-bold py-1 px-2 rounded ml-5 text-xs"
-                        onClick={() => deleteStream(stream.stream_id)}
-                    >
-                        确定
-                    </button>
-                    <button
-                        className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-1 px-2 rounded ml-5 text-xs"
-                        onClick={() => setShowDeleteStream(false)}
-                    >
-                        不了
-                    </button>
-                </>
+                <button
+                    className="outline outline-2 outline-red-300 hover:outline-red-600 py-1 px-2 rounded ml-5"
+                    onClick={() => deleteStream(stream.stream_id)}
+                >
+                    <Dui className="h-5 w-5"/>
+                </button>
+                <button
+                    className="outline outline-2 outline-gray-500 hover:outline-gray-700 py-1 px-2 rounded ml-4"
+                    onClick={() => setShowDeleteStream(false)}
+                >
+                    <Cuo className="h-5 w-5"/>
+                </button>
+            </>
+                
             ) : (
                 <>
                     <button
-                        className="bg-red-800 hover:bg-red-900 text-white font-bold py-1 px-2 rounded ml-5 text-xs"
+                        className="outline outline-2 outline-red-500 hover:outline-red-700 py-1 px-1 rounded ml-5"
                         onClick={() => setShowDeleteStream(true)}
                     >
-                        删除
+                        <Shanchu className="h-5 w-5"/>
                     </button>
                     <button
-                        className="text-white font-bold px-3 py-3 rounded bg-indigo-500 ml-4"
+                        className="px-1 py-2 rounded outline outline-2 outline-indigo-500 hover:outline-indigo-700 ml-4"
                         onClick={toggleshowDetails}
                     >
-                        报告
+                        <Baogao className="h-7 w-7"/>
                     </button>
                 </>
+                
             )}
 
             {showGames && (
                 <div>
                     <button
-                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4"
+                        className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-1 px-2 rounded mt-4"
                         onClick={() => addNewGame()}
                     >
-                        新的一局棋
+                        新一局
                     </button>
 
                     {games.map((game) => (

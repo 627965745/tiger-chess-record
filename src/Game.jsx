@@ -3,36 +3,14 @@ import Round from "./Round";
 import { getRoundsByGameid, deleteGameByGameid } from "./utils/apis";
 import NewGame from "./NewGame";
 import ResultTable from "./ResultTable";
+import { formatDate } from "./utils/dateutil";
+import { ReactComponent as Gan } from './utils/icons/gan.svg';
+import { ReactComponent as Baogao } from './utils/icons/baogao.svg';
+import { ReactComponent as Shanchu } from './utils/icons/shanchu.svg';
+import { ReactComponent as Dui } from './utils/icons/dui.svg';
+import { ReactComponent as Cuo } from './utils/icons/cuo.svg';
 
 const Game = ({ game, getAllGamesByStreamid }) => {
-    Date.prototype.format = function (fmt) {
-        var o = {
-            "M+": this.getMonth() + 1, //月份
-            "d+": this.getDate(), //日
-            "h+": this.getHours(), //小时
-            "m+": this.getMinutes(), //分
-            "s+": this.getSeconds(), //秒
-            "q+": Math.floor((this.getMonth() + 3) / 3), //季度
-            S: this.getMilliseconds(), //毫秒
-        };
-        if (/(y+)/.test(fmt)) {
-            fmt = fmt.replace(
-                RegExp.$1,
-                (this.getFullYear() + "").substr(4 - RegExp.$1.length)
-            );
-        }
-        for (var k in o) {
-            if (new RegExp("(" + k + ")").test(fmt)) {
-                fmt = fmt.replace(
-                    RegExp.$1,
-                    RegExp.$1.length == 1
-                        ? o[k]
-                        : ("00" + o[k]).substr(("" + o[k]).length)
-                );
-            }
-        }
-        return fmt;
-    };
     const [showRounds, setShowRounds] = useState(false);
     const [showDeleteGame, setShowDeleteGame] = useState(false);
     const [showNewRounds, setShowNewRounds] = useState(false);
@@ -90,40 +68,37 @@ const Game = ({ game, getAllGamesByStreamid }) => {
                 className="font-bold text-blue-600 hover:text-blue-800"
                 onClick={toggleRounds}
             >
-                棋局时间：{" "}
-                {new Date(new Date(game.game_time).getTime()).format(
-                    "hh:mm:ss"
-                )}
+                棋局：{formatDate(new Date(new Date(game.game_time).getTime()),"hh:mm:ss")}
             </button>
 
             {showDeleteGame ? (
                 <>
                     <button
-                        className="bg-red-800 hover:bg-red-700 text-white font-bold py-1 px-2 rounded ml-5 text-xs"
+                        className="outline outline-2 outline-red-300 hover:outline-red-600 py-1 px-2 rounded ml-5"
                         onClick={() => deleteGame(game.game_id)}
                     >
-                        确定
+                        <Dui className="h-5 w-5"/>
                     </button>
                     <button
-                        className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-1 px-2 rounded ml-5 text-xs"
+                        className="outline outline-2 outline-gray-500 hover:outline-gray-700 py-1 px-2 rounded ml-4"
                         onClick={() => setShowDeleteGame(false)}
                     >
-                        不了
+                        <Cuo className="h-5 w-5"/>
                     </button>
                 </>
             ) : (
                 <>
                     <button
-                        className="bg-red-800 hover:bg-red-900 text-white font-bold py-1 px-2 rounded ml-5 text-xs"
+                        className="outline outline-2 outline-red-500 hover:outline-red-700 py-1 px-1 rounded ml-5"
                         onClick={() => setShowDeleteGame(true)}
                     >
-                        删除
+                        <Shanchu className="h-5 w-5"/>
                     </button>
                     <button
-                        className="text-white font-bold px-3 py-3 rounded bg-indigo-500 ml-4"
+                        className="px-1 py-2 rounded outline outline-2 outline-indigo-500 hover:outline-indigo-700s ml-4"
                         onClick={toggleshowDetails}
                     >
-                        报告
+                        <Baogao className="h-7 w-7"/>
                     </button>
                 </>
             )}
@@ -131,10 +106,10 @@ const Game = ({ game, getAllGamesByStreamid }) => {
             <div>
                 {showRounds && (
                     <button
-                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4"
+                        className="bg-blue-400 hover:bg-blue-500 py-1 px-2 rounded mt-4"
                         onClick={toggleNewRounds}
                     >
-                        干
+                        <Gan className="h-7 w-7"/>
                     </button>
                 )}
                 {showNewRounds && (

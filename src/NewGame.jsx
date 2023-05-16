@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { ReactComponent as Cuo } from './utils/icons/cuo.svg';
 
 const { getPlayers, addRound, editRound } = require("./utils/apis");
 
@@ -233,7 +234,7 @@ const NewGame = ({
                     兵
                 </button>
             </div>
-            <div className="col-span-4">
+            <div className="col-span-4 justify-items-center items-center">
                 <label htmlFor="filter-input" className="font-bold">
                     内容：
                 </label>
@@ -248,15 +249,15 @@ const NewGame = ({
                     placeholder="蓝40，绿39..."
                 />
                 <button
-                    className="bg-red-500 py-1 px-2 cursor-pointer rounded text-white"
+                    className="bg-red-500 pb-2 px-1 cursor-pointer rounded"
                     onClick={() => {
                         setGameName("");
                     }}
                 >
-                    X
+                    <Cuo className="h-5 w-5 pt-2"/>
                 </button>
             </div>
-            <div className="bg-blue-200 p-1 mb-1 rounded col-span-4 mx-1">
+            <div className="bg-blue-200 p-1 mb-1 rounded col-span-4">
                 <h2 className="mb-1">玩家列表（点击参与的玩家）</h2>
                 <div className="col-span-4 mb-2">
                     <label htmlFor="filter-input">搜索玩家：</label>

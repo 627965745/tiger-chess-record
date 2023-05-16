@@ -118,6 +118,7 @@ const NewGame = ({
                 if (response.status !== 200) {
                     console.error("添加失败:", response.data.message);
                 } else {
+                    scrollToDetails();
                     getRounds();
                     setAvailablePlayers(players);
                     setSelectedPlayers([]);

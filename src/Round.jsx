@@ -40,7 +40,6 @@ const Round = ({ round, getRounds }) => {
       };
 
     const changeRoundStatus = async (status) => {
-        console.log(status)
         if (status !== round.round_status) {
             const updateRoundStatus = {
                 round_id: round.round_id,

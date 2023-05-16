@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Round from "./Round";
 import { getRoundsByGameid, deleteGameByGameid } from "./utils/apis";
 import NewGame from "./NewGame";
@@ -11,6 +11,7 @@ import { ReactComponent as Dui } from './utils/icons/dui.svg';
 import { ReactComponent as Cuo } from './utils/icons/cuo.svg';
 
 const Game = ({ game, getAllGamesByStreamid }) => {
+    const scrollToDetails = useRef(null);
     const [showRounds, setShowRounds] = useState(false);
     const [showDeleteGame, setShowDeleteGame] = useState(false);
     const [showNewRounds, setShowNewRounds] = useState(false);
@@ -20,7 +21,11 @@ const Game = ({ game, getAllGamesByStreamid }) => {
     useEffect(() => {
         getRounds();
     }, []);
-
+    const scrollToElement = () => {
+        if (scrollToDetails.current) {
+            scrollToDetails.current.scrollIntoView({ behavior: 'smooth' })
+        }
+      };
     const getRounds = async () => {
         await getRoundsByGameid(game.game_id)
             .then((response) => {
@@ -63,7 +68,7 @@ const Game = ({ game, getAllGamesByStreamid }) => {
     };
 
     return (
-        <div className="p-4 border-b border-gray-300">
+        <div ref={scrollToDetails} className="p-4 border-b border-gray-300">
             <button
                 className="font-bold text-blue-600 hover:text-blue-800"
                 onClick={toggleRounds}
@@ -118,6 +123,7 @@ const Game = ({ game, getAllGamesByStreamid }) => {
                             game_id={game.game_id}
                             getRounds={getRounds}
                             toggleNewRounds={toggleNewRounds}
+                            scrollToDetails={scrollToElement}
                         />
                     </div>
                 )}

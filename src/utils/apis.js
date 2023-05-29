@@ -31,6 +31,8 @@ export const getRoundsByGameid = (gameId) => axios.get('/getRoundsByGameid', { p
 
 export const getStreamInfo = (streamid) => axios.get('/getStreamInfo', { params: { streamid } });
 
+export const getStreamTableInfo = (streamid) => axios.get('/getStreamTableInfo', { params: { streamid } });
+
 export const getGameInfo = (gameid) => axios.get('/getGameInfo', { params: { gameid } });
 
 export const getRoundInfo = (roundid) => axios.get('/getRoundInfo', { params: { roundid } });

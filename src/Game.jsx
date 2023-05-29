@@ -43,6 +43,7 @@ const Game = ({ game, getAllGamesByStreamid }) => {
             getRounds();
         }
         setShowRounds(!showRounds);
+        setShowNewRounds(false);
         setShowDetails(false);
     };
 
@@ -117,7 +118,7 @@ const Game = ({ game, getAllGamesByStreamid }) => {
                         <Gan className="h-7 w-7"/>
                     </button>
                 )}
-                {showNewRounds && (
+                {(showNewRounds && showRounds) && (
                     <div>
                         <NewGame
                             game_id={game.game_id}

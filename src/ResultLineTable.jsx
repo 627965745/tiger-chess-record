@@ -1,6 +1,7 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useLayoutEffect } from "react";
 import ReactECharts from "echarts-for-react";
 import { getStreamTableInfo } from "./utils/apis";
+import debounce from "lodash/debounce";
 
 const ResultLineTable = ({ id }) => {
     const [loading, setLoading] = useState(true);
@@ -8,6 +9,19 @@ const ResultLineTable = ({ id }) => {
     const [tableData, setTableData] = useState([
         { round_name: "", round_time: "", player_names: "", total_stakes: 0 },
     ]);
+    const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+    useLayoutEffect(() => {
+        const handleWindowResize = debounce(() => {
+          const newWindowWidth = window.innerWidth;
+          console.log(newWindowWidth)
+          setWindowWidth(newWindowWidth);
+        }, 50);
+    
+        window.addEventListener("resize", handleWindowResize);
+        handleWindowResize();
+        return () => window.removeEventListener("resize", handleWindowResize);
+      }, []);
 
     const getTableInfo = async (id) => {
         await getStreamTableInfo(id)
@@ -32,7 +46,7 @@ const ResultLineTable = ({ id }) => {
                             points.push(i - 1);
                         }
                     }
-                    points.push(response.data.length-1);
+                    points.push(response.data.length - 1);
                     setMarkPoints(points);
                     setLoading(false);
                 }
@@ -47,7 +61,7 @@ const ResultLineTable = ({ id }) => {
             axisLabel: {
                 interval: 1,
                 rotate: -90,
-                padding: [0,0,0,10]
+                padding: [0, 0, 0, 10],
             },
         },
         yAxis: {
@@ -62,15 +76,14 @@ const ResultLineTable = ({ id }) => {
                 label: {
                     show: true,
                     align: "center",
-                    position: [0,-20],
+                    position: [0, -20],
                     formatter: (params) => {
                         if (markPoints.includes(params.dataIndex)) {
-                            if(params.data<0) {
+                            if (params.data < 0) {
                                 return "\n\n\n" + params.data;
                             } else {
                                 return params.data;
                             }
-                            
                         } else {
                             return "";
                         }
@@ -125,10 +138,12 @@ const ResultLineTable = ({ id }) => {
         return <div>加载中...</div>;
     }
     return (
+        <div className="-ml-3">
         <ReactECharts
+            className=""
             option={getOption()}
-            style={{ height: "400px", width: `${window.Width - 40}px` }}
-        />
+            style={{ height: "400px", width: `${windowWidth*0.95}px`}}
+        /></div>
     );
 };
 

@@ -17,7 +17,6 @@ import { ReactComponent as Cuo } from "./utils/icons/cuo.svg";
 const Stream = ({ stream, getAllStreams }) => {
     const [showGames, setShowGames] = useState(false);
     const [showDeleteStream, setShowDeleteStream] = useState(false);
-    const [showNewGames, setShowNewGames] = useState(false);
     const [games, setGames] = useState([]);
     const [showDetails, setShowDetails] = useState(false);
     const [showTable, setShowTable] = useState(false);
@@ -25,7 +24,7 @@ const Stream = ({ stream, getAllStreams }) => {
 
     useEffect(() => {
         getAllGamesByStreamid(stream.stream_id);
-    }, []);
+    }, [stream.stream_id]);
 
     const getAllGamesByStreamid = async (stream_id) => {
         await getGamesByStreamid(stream_id)
@@ -122,13 +121,13 @@ const Stream = ({ stream, getAllStreams }) => {
                         <Shanchu className="h-5 w-5" />
                     </button>
                     <button
-                        className="px-1 py-2 rounded outline outline-2 outline-indigo-500 hover:outline-indigo-700 ml-4"
+                        className="px-1 py-2 rounded outline outline-2 outline-indigo-500 hover:outline-indigo-700 ml-3"
                         onClick={toggleshowDetails}
                     >
                         <Baogao className="h-7 w-7" />
                     </button>
                     <button
-                        className="px-1 py-2 rounded outline outline-2 outline-indigo-500 hover:outline-indigo-700 ml-4"
+                        className="px-1 py-2 rounded outline outline-2 outline-indigo-500 hover:outline-indigo-700 ml-3"
                         onClick={toggleshowTable}
                     >
                         <Zhexiantu className="h-7 w-7" />

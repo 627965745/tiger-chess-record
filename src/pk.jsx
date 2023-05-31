@@ -39,7 +39,7 @@ const Pk = () => {
         return <div>加载中...</div>;
     }
     return (
-        <div className="container mx-auto p-4 ">
+        <div className="h-screen mx-auto p-4 ">
             <div className="flex justify-between">
             <button
                 className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
@@ -57,7 +57,7 @@ const Pk = () => {
             {streams.map((stream) => (
                 <div
                     key={stream.stream_id}
-                    className="box-border border-4 border-gray-200 bg-gray-100 my-5"
+                    className="box-border border-4 border-gray-200 bg-gray-100 my-5 mx-auto"
                 >
                     <Stream stream={stream} getAllStreams={getAllStreams} />
                 </div>

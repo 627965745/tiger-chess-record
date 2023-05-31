@@ -10,7 +10,6 @@ const config = {
   }
 };
 
-
 const options = {
 	headers: {"content-type": "application/json"}
 }

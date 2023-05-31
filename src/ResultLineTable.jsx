@@ -32,6 +32,7 @@ const ResultLineTable = ({ id }) => {
                             points.push(i - 1);
                         }
                     }
+                    points.push(response.data.length-1);
                     setMarkPoints(points);
                     setLoading(false);
                 }
@@ -126,7 +127,7 @@ const ResultLineTable = ({ id }) => {
     return (
         <ReactECharts
             option={getOption()}
-            style={{ height: "400px", width: `${window.innerWidth - 40}px` }}
+            style={{ height: "400px", width: `${window.Width - 40}px` }}
         />
     );
 };

@@ -27,7 +27,7 @@ At the beginning, there were only a few participants in the game, making it rela
 
 Realizing the growing interest in supporting the streamer's game, I volunteered to develop a web application to assist with recording and statistics. This program significantly reduces the time and effort needed for record-keeping and tracking.
 
-The web application I developed serves as a convenient tool for participants to input their moves, outcomes, and overall game progress. It automates the process of tracking individual gameplay sessions and calculating wins and losses. With this program in place, participants no longer need to manually record and tally their results, saving them valuable time and energy.
+The web application I developed serves as a convenient tool for administrators to input plays, outcomes, and overall game progress. It automates the process of tracking individual gameplay sessions and calculating wins and losses. With this program in place, administrators no longer need to manually record and tally results, saving them valuable time and energy.
 
 The introduction of the web application not only enhances the efficiency of recording and statistics but also contributes to the overall enjoyment of the game. Participants can focus more on the strategic aspects of Four Nations Chess, as the burden of manual record-keeping is alleviated. This development fosters a smoother and more engaging experience for both the streamer and the players, allowing them to fully immerse themselves in the game without distractions.
 

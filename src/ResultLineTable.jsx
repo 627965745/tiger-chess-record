@@ -13,14 +13,14 @@ const ResultLineTable = ({ id }) => {
 
     useLayoutEffect(() => {
         const handleWindowResize = debounce(() => {
-          const newWindowWidth = window.innerWidth;
-          setWindowWidth(newWindowWidth);
+            const newWindowWidth = window.innerWidth;
+            setWindowWidth(newWindowWidth);
         }, 50);
-    
+
         window.addEventListener("resize", handleWindowResize);
         handleWindowResize();
         return () => window.removeEventListener("resize", handleWindowResize);
-      }, []);
+    }, []);
 
     const getTableInfo = async (id) => {
         await getStreamTableInfo(id)
@@ -113,6 +113,7 @@ const ResultLineTable = ({ id }) => {
             formatter: function (params) {
                 const roundData = tableData[params[0].dataIndex];
                 return `<div style="width: auto;">
+                第${params[0].dataIndex}把<br/>
               内容: ${roundData.round_name}<br/>
               时间: ${roundData.round_time}<br/>
               累计: ${roundData.total_stakes}
@@ -138,11 +139,12 @@ const ResultLineTable = ({ id }) => {
     }
     return (
         <div className="-ml-3">
-        <ReactECharts
-            className=""
-            option={getOption()}
-            style={{ height: "400px", width: `${windowWidth*0.95}px`}}
-        /></div>
+            <ReactECharts
+                className=""
+                option={getOption()}
+                style={{ height: "400px", width: `${windowWidth * 0.95}px` }}
+            />
+        </div>
     );
 };
 

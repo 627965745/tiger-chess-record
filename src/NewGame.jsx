@@ -137,6 +137,7 @@ const NewGame = ({
         const newRoundDetail = {
             game_id: game_id,
             round_id: round.round_id,
+            round_time: round.round_time,
             round_name: gameName,
             players: selectedPlayers,
             round_status: round.round_status,

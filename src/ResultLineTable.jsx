@@ -14,7 +14,6 @@ const ResultLineTable = ({ id }) => {
     useLayoutEffect(() => {
         const handleWindowResize = debounce(() => {
           const newWindowWidth = window.innerWidth;
-          console.log(newWindowWidth)
           setWindowWidth(newWindowWidth);
         }, 50);
     

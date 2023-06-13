@@ -20,6 +20,8 @@ export const checkSession = () => axios.get("/checkSession");
 
 export const getPlayers = () => axios.get("/getPlayers");
 
+export const getPlayerList = () => axios.get("/getPlayerList");
+
 export const getStreams = () => axios.get("/getStreams");
 
 export const getRoundsByStreamidAndPlayerid = (streamPlayer) => axios.get('/getRoundsByStreamidAndPlayerid', { params: { streamPlayer } } );

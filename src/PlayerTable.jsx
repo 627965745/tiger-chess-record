@@ -2,7 +2,7 @@ import React, { useState, useEffect, useMemo } from "react";
 import { useNavigate  } from "react-router-dom";
 import { useTable, useGlobalFilter } from "react-table";
 import {
-    getPlayers,
+    getPlayerList,
     editPlayer,
     deletePlayerByPlayerid,
     addPlayer,
@@ -22,7 +22,7 @@ const PlayersTable = () => {
 
     const [searchInput, setSearchInput] = useState("");
     const fetchData = async () => {
-        await getPlayers()
+        await getPlayerList()
             .then((response) => {
                 if (response.status !== 200) {
                     console.error("获取玩家列表失败:", response.data.message);

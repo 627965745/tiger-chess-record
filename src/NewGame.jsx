@@ -19,7 +19,6 @@ const NewGame = ({
     const [filterPlayer, setFilterPlayer] = useState("");
     const [gameName, setGameName] = useState("");
     const [loading, setLoading] = useState(true);
-    const [showMessage, setShowMessage] = useState(false);
     useEffect(() => {
         getAllPlayers();
         if (round !== undefined) {
@@ -59,6 +58,10 @@ const NewGame = ({
                 if (response.status !== 200) {
                     console.error("获取玩家列表失败:", response.data.message);
                 } else {
+                    if (round === undefined) {
+                        console.log(response.data)
+                    }
+                    
                     setPlayers(response.data);
                 }
             })

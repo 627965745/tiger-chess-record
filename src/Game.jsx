@@ -4,11 +4,11 @@ import { getRoundsByGameid, deleteGameByGameid } from "./utils/apis";
 import NewGame from "./NewGame";
 import ResultTable from "./ResultTable";
 import { formatDate } from "./utils/dateutil";
-import { ReactComponent as Gan } from './utils/icons/gan.svg';
-import { ReactComponent as Baogao } from './utils/icons/baogao.svg';
-import { ReactComponent as Shanchu } from './utils/icons/shanchu.svg';
-import { ReactComponent as Dui } from './utils/icons/dui.svg';
-import { ReactComponent as Cuo } from './utils/icons/cuo.svg';
+import { ReactComponent as Gan } from "./utils/icons/gan.svg";
+import { ReactComponent as Baogao } from "./utils/icons/baogao.svg";
+import { ReactComponent as Shanchu } from "./utils/icons/shanchu.svg";
+import { ReactComponent as Dui } from "./utils/icons/dui.svg";
+import { ReactComponent as Cuo } from "./utils/icons/cuo.svg";
 
 const Game = ({ game, getAllGamesByStreamid }) => {
     const scrollToDetails = useRef(null);
@@ -19,13 +19,15 @@ const Game = ({ game, getAllGamesByStreamid }) => {
     const [showDetails, setShowDetails] = useState(false);
     const tableContent = "game";
     useEffect(() => {
-        getRounds();
+        if (showRounds) {
+            getRounds();
+        }
     }, []);
     const scrollToElement = () => {
         if (scrollToDetails.current) {
-            scrollToDetails.current.scrollIntoView({ behavior: 'smooth' })
+            scrollToDetails.current.scrollIntoView({ behavior: "smooth" });
         }
-      };
+    };
     const getRounds = async () => {
         await getRoundsByGameid(game.game_id)
             .then((response) => {
@@ -74,7 +76,11 @@ const Game = ({ game, getAllGamesByStreamid }) => {
                 className="font-bold text-blue-600 hover:text-blue-800"
                 onClick={toggleRounds}
             >
-                棋局：{formatDate(new Date(new Date(game.game_time).getTime()),"hh:mm:ss")}
+                棋局：
+                {formatDate(
+                    new Date(new Date(game.game_time).getTime()),
+                    "hh:mm:ss"
+                )}
             </button>
 
             {showDeleteGame ? (
@@ -83,13 +89,13 @@ const Game = ({ game, getAllGamesByStreamid }) => {
                         className="outline outline-2 outline-red-300 hover:outline-red-600 py-1 px-2 rounded ml-5"
                         onClick={() => deleteGame(game.game_id)}
                     >
-                        <Dui className="h-5 w-5"/>
+                        <Dui className="h-5 w-5" />
                     </button>
                     <button
                         className="outline outline-2 outline-gray-500 hover:outline-gray-700 py-1 px-2 rounded ml-4"
                         onClick={() => setShowDeleteGame(false)}
                     >
-                        <Cuo className="h-5 w-5"/>
+                        <Cuo className="h-5 w-5" />
                     </button>
                 </>
             ) : (
@@ -98,13 +104,13 @@ const Game = ({ game, getAllGamesByStreamid }) => {
                         className="outline outline-2 outline-red-500 hover:outline-red-700 py-1 px-1 rounded ml-5"
                         onClick={() => setShowDeleteGame(true)}
                     >
-                        <Shanchu className="h-5 w-5"/>
+                        <Shanchu className="h-5 w-5" />
                     </button>
                     <button
                         className="px-1 py-2 rounded outline outline-2 outline-indigo-500 hover:outline-indigo-700s ml-4"
                         onClick={toggleshowDetails}
                     >
-                        <Baogao className="h-7 w-7"/>
+                        <Baogao className="h-7 w-7" />
                     </button>
                 </>
             )}
@@ -115,10 +121,10 @@ const Game = ({ game, getAllGamesByStreamid }) => {
                         className="bg-blue-400 hover:bg-blue-500 py-1 px-2 rounded mt-4"
                         onClick={toggleNewRounds}
                     >
-                        <Gan className="h-7 w-7"/>
+                        <Gan className="h-7 w-7" />
                     </button>
                 )}
-                {(showNewRounds && showRounds) && (
+                {showNewRounds && showRounds && (
                     <div>
                         <NewGame
                             game_id={game.game_id}

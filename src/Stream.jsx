@@ -23,7 +23,9 @@ const Stream = ({ stream, getAllStreams }) => {
     const tableContent = "stream";
 
     useEffect(() => {
-        getAllGamesByStreamid(stream.stream_id);
+        if (showGames) {
+            getAllGamesByStreamid(stream.stream_id);
+        }
     }, [stream.stream_id]);
 
     const getAllGamesByStreamid = async (stream_id) => {

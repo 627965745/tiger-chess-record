@@ -53,24 +53,24 @@ const Stream = ({ stream, getAllStreams }) => {
         await addGameByStreamid(stream.stream_id)
             .then((response) => {
                 if (response.status !== 200) {
-                    console.error("更新失败:", response.data.message);
+                    console.error("添加失败:", response.data.message);
                 } else {
                     getAllGamesByStreamid(stream.stream_id);
                 }
             })
-            .catch((error) => console.error("更新失败:", error.message));
+            .catch((error) => console.error("添加失败:", error.message));
     };
 
     const deleteStream = async (streamid) => {
         await deleteStreamByStreamid(streamid)
             .then((response) => {
                 if (response.status !== 200) {
-                    console.error("更新失败:", response.data.message);
+                    console.error("删除失败:", response.data.message);
                 } else {
                     getAllStreams();
                 }
             })
-            .catch((error) => console.error("更新失败:", error.message));
+            .catch((error) => console.error("删除失败:", error.message));
     };
 
     const toggleshowDetails = () => {

@@ -57,12 +57,12 @@ const Game = ({ game, getAllGamesByStreamid }) => {
         await deleteGameByGameid(gameid)
             .then((response) => {
                 if (response.status !== 200) {
-                    console.error("获取列表失败:", response.data.message);
+                    console.error("删除失败:", response.data.message);
                 } else {
                     getAllGamesByStreamid(game.stream_id);
                 }
             })
-            .catch((error) => console.error("获取列表失败:", error.message));
+            .catch((error) => console.error("删除失败:", error.message));
     };
 
     const toggleshowDetails = () => {

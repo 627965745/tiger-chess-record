@@ -29,15 +29,15 @@ const Stream = ({ stream, getAllStreams }) => {
     }, [stream.stream_id]);
 
     const getAllGamesByStreamid = async (stream_id) => {
-        await getGamesByStreamid(stream_id)
+        await getGamesByStreamid({stream_id: stream_id})
             .then((response) => {
-                if (response.status !== 200) {
-                    console.error("获取棋局失败:", response.data.message);
-                } else {
-                    setGames(response.data);
+                let data = response.data;
+                if (data.status > 0) {
+                    console.error("unexpected:", data.message);
+                    return true;
                 }
-            })
-            .catch((error) => console.error("获取棋局失败:", error.message));
+                setGames(data.data);
+            });
     };
 
     const toggleGames = () => {
@@ -50,27 +50,27 @@ const Stream = ({ stream, getAllStreams }) => {
     };
 
     const addNewGame = async () => {
-        await addGameByStreamid(stream.stream_id)
+        await addGameByStreamid(stream)
             .then((response) => {
-                if (response.status !== 200) {
-                    console.error("添加失败:", response.data.message);
-                } else {
-                    getAllGamesByStreamid(stream.stream_id);
+                let data = response.data;
+                if (data.status > 0) {
+                    console.error("unexpected:", data.message);
+                    return true;
                 }
-            })
-            .catch((error) => console.error("添加失败:", error.message));
+                getAllGamesByStreamid(stream.stream_id);
+            });
     };
 
     const deleteStream = async (streamid) => {
-        await deleteStreamByStreamid(streamid)
+        await deleteStreamByStreamid({stream_id: streamid})
             .then((response) => {
-                if (response.status !== 200) {
-                    console.error("删除失败:", response.data.message);
-                } else {
-                    getAllStreams();
+                let data = response.data;
+                if (data.status > 0) {
+                    console.error("unexpected:", data.message);
+                    return true;
                 }
-            })
-            .catch((error) => console.error("删除失败:", error.message));
+                getAllStreams();
+            });
     };
 
     const toggleshowDetails = () => {

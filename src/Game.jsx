@@ -29,15 +29,14 @@ const Game = ({ game, getAllGamesByStreamid }) => {
         }
     };
     const getRounds = async () => {
-        await getRoundsByGameid(game.game_id)
-            .then((response) => {
-                if (response.status !== 200) {
-                    console.error("获取列表失败:", response.data.message);
-                } else {
-                    setRounds(response.data);
-                }
-            })
-            .catch((error) => console.error("获取列表失败:", error.message));
+        await getRoundsByGameid(game).then((response) => {
+            let data = response.data;
+            if (data.status > 0) {
+                console.error("unexpected:", data.message);
+                    return true;
+            }
+            setRounds(data.data);
+        });
     };
 
     const toggleRounds = () => {
@@ -54,15 +53,14 @@ const Game = ({ game, getAllGamesByStreamid }) => {
     };
 
     const deleteGame = async (gameid) => {
-        await deleteGameByGameid(gameid)
-            .then((response) => {
-                if (response.status !== 200) {
-                    console.error("删除失败:", response.data.message);
-                } else {
-                    getAllGamesByStreamid(game.stream_id);
-                }
-            })
-            .catch((error) => console.error("删除失败:", error.message));
+        await deleteGameByGameid({game_id: gameid}).then((response) => {
+            let data = response.data;
+            if (data.status > 0) {
+                console.error("unexpected:", data.message);
+                    return true;
+            }
+            getAllGamesByStreamid(game.stream_id);
+        });
     };
 
     const toggleshowDetails = () => {

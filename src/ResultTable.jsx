@@ -40,21 +40,15 @@ const ResultTable = ({ tableContent, id }) => {
             stream_id: id,
         };
 
-        await getRoundsByStreamidAndPlayerid(streamPlayer)
-            .then((response) => {
-                if (response.status !== 200) {
-                    console.error(
-                        "获取玩家总结信息失败:",
-                        response.data.message
-                    );
-                } else {
-                    setPlayerRoundsIsOpen(true);
-                    setPlayerRounds(response.data);
-                }
-            })
-            .catch((error) =>
-                console.error("获取玩家总结信息失败:", error.message)
-            );
+        await getRoundsByStreamidAndPlayerid(streamPlayer).then((response) => {
+            let data = response.data;
+            if (data.status > 0) {
+                console.error("unexpected:", data.message);
+                return false;
+            }
+            setPlayerRoundsIsOpen(true);
+            setPlayerRounds(data.data);
+        });
     };
 
     useEffect(() => {
@@ -63,54 +57,36 @@ const ResultTable = ({ tableContent, id }) => {
 
     const fetchContentData = async () => {
         if (tableContent === "stream") {
-            await getStreamInfo(id)
-                .then((response) => {
-                    if (response.status !== 200) {
-                        console.error(
-                            "获取本局信息失败:",
-                            response.data.message
-                        );
-                    } else {
-                        setData(response.data);
-                        setLoading(false);
-                    }
-                })
-                .catch((error) =>
-                    console.error("获取本局信息失败:", error.message)
-                );
+            await getStreamInfo({stream_id: id}).then((response) => {
+                let data = response.data;
+                if (data.status > 0) {
+                    console.error("unexpected:", data.message);
+                    return true;
+                }
+                setData(data.data);
+                setLoading(false);
+            });
         } else if (tableContent === "game") {
-            await getGameInfo(id)
-                .then((response) => {
-                    if (response.status !== 200) {
-                        console.error(
-                            "获取游戏信息失败:",
-                            response.data.message
-                        );
-                    } else {
-                        setData(response.data);
-                        setLoading(false);
-                    }
-                })
-                .catch((error) =>
-                    console.error("获取游戏信息失败:", error.message)
-                );
+            await getGameInfo({game_id: id}).then((response) => {
+                let data = response.data;
+                if (data.status > 0) {
+                    console.error("unexpected:", data.message);
+                    return true;
+                }
+                setData(data.data);
+                setLoading(false);
+            });
         } else if (tableContent === "round") {
-            await getRoundInfo(id)
-                .then((response) => {
-                    if (response.status !== 200) {
-                        console.error(
-                            "获取直播信息失败:",
-                            response.data.message
-                        );
-                    } else {
-                        setLoading(true);
-                        setData(response.data);
-                        setLoading(false);
-                    }
-                })
-                .catch((error) =>
-                    console.error("获取直播信息失败:", error.message)
-                );
+            await getRoundInfo(id).then((response) => {
+                let data = response.data;
+                if (data.status > 0) {
+                    console.error("unexpected:", data.message);
+                    return true;
+                }
+                setLoading(true);
+                setData(data.data);
+                setLoading(false);
+            });
         }
     };
 
@@ -121,25 +97,24 @@ const ResultTable = ({ tableContent, id }) => {
                 accessor: "player_name",
                 width: 100,
                 Cell: ({ cell, row }) => {
-                    if (tableContent === 'stream') {
+                    if (tableContent === "stream") {
                         return (
                             <button
-                        style={{
-                            background: "none",
-                            border: "none",
-                            cursor: "pointer",
-                            textDecoration: "underline",
-                            color: "blue",
-                        }}
-                        onClick={() => handleNameClick(row.original)}
-                    >
-                        {cell.value}
-                    </button>
-                        )
+                                style={{
+                                    background: "none",
+                                    border: "none",
+                                    cursor: "pointer",
+                                    textDecoration: "underline",
+                                    color: "blue",
+                                }}
+                                onClick={() => handleNameClick(row.original)}
+                            >
+                                {cell.value}
+                            </button>
+                        );
                     } else {
-                        return <span>{cell.value}</span>
+                        return <span>{cell.value}</span>;
                     }
-                    
                 },
             },
             {
@@ -194,11 +169,11 @@ const ResultTable = ({ tableContent, id }) => {
                         justifyContent: "center",
                     },
                     content: {
-                        position: 'fixed',
+                        position: "fixed",
                         width: "320px",
                         WebkitOverflowScrolling: "touch",
                         height: "100vh",
-                        maxHeight: '98vh',
+                        maxHeight: "98vh",
                         top: "50%",
                         left: "50%",
                         transform: "translate(-50%, -50%)",
@@ -250,7 +225,12 @@ const ResultTable = ({ tableContent, id }) => {
                         {playerRounds.map((round) => (
                             <div className="">
                                 <p>
-                                {formatDate(new Date(new Date(round.game_time).getTime()),"hh:mm:ss")}{" "}
+                                    {formatDate(
+                                        new Date(
+                                            new Date(round.game_time).getTime()
+                                        ),
+                                        "hh:mm:ss"
+                                    )}{" "}
                                     - {round.round_name} -{" "}
                                     {round.round_status === "强哥赢"
                                         ? "输"

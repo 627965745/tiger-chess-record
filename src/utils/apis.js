@@ -2,41 +2,31 @@ import axios from "axios";
 
 axios.defaults.baseURL = process.env.REACT_APP_API_BASE_URL;
 axios.defaults.withCredentials = true;
-const config = {
-  headers: {
-    "Access-Control-Allow-Origin": "*",
-    "Access-Control-Allow-Headers": "*",
-    "Access-Control-Allow-Methods": "*"
-  }
-};
-
-const options = {
-	headers: {"content-type": "application/json"}
-}
+axios.defaults.headers.post['Content-Type'] = 'application/json';
 
 export const login = (password) => axios.post('/login', { password } );
 
-export const checkSession = () => axios.get("/checkSession");
+export const checkSession = () => axios.post("/checkSession");
 
-export const getPlayers = () => axios.get("/getPlayers");
+export const getPlayers = () => axios.post("/getPlayers");
 
-export const getPlayerList = () => axios.get("/getPlayerList");
+export const getPlayerList = () => axios.post("/getPlayerList");
 
-export const getStreams = () => axios.get("/getStreams");
+export const getStreams = () => axios.post("/getStreams");
 
-export const getRoundsByStreamidAndPlayerid = (streamPlayer) => axios.get('/getRoundsByStreamidAndPlayerid', { params: { streamPlayer } } );
+export const getRoundsByStreamidAndPlayerid = (streamPlayer) => axios.post('/getRoundsByStreamidAndPlayerid', streamPlayer);
 
-export const getGamesByStreamid = (streamid) => axios.get('/getGamesByStreamid', { params: { streamid } });
+export const getGamesByStreamid = (streamid) => axios.post('/getGamesByStreamid', streamid);
 
-export const getRoundsByGameid = (gameId) => axios.get('/getRoundsByGameid', { params: { gameId } });
+export const getRoundsByGameid = (gameId) => axios.post('/getRoundsByGameid', gameId);
 
-export const getStreamInfo = (streamid) => axios.get('/getStreamInfo', { params: { streamid } });
+export const getStreamInfo = (streamid) => axios.post('/getStreamInfo', streamid);
 
-export const getStreamTableInfo = (streamid) => axios.get('/getStreamTableInfo', { params: { streamid } });
+export const getStreamTableInfo = (streamid) => axios.post('/getStreamTableInfo', streamid);
 
-export const getGameInfo = (gameid) => axios.get('/getGameInfo', { params: { gameid } });
+export const getGameInfo = (gameid) => axios.post('/getGameInfo', gameid);
 
-export const getRoundInfo = (roundid) => axios.get('/getRoundInfo', { params: { roundid } });
+export const getRoundInfo = (roundid) => axios.post('/getRoundInfo', roundid);
 
 export const addGameByStreamid = (streamid) => axios.post("/addGameByStreamid", streamid);
 
@@ -46,17 +36,17 @@ export const addStream = () => axios.post('/addStream');
 
 export const addRound = (roundDetail) => axios.post('/addRound', roundDetail);
 
-export const editRound = (roundDetail) => axios.put('/editRound', roundDetail);
+export const editRound = (roundDetail) => axios.post('/editRound', roundDetail);
 
-export const editPlayer = (player) => axios.put('/editPlayer', player);
+export const editPlayer = (player) => axios.post('/editPlayer', player);
 
-export const editRoundStatus = (status) => axios.put('/editRoundStatus', status);
+export const editRoundStatus = (status) => axios.post('/editRoundStatus', status);
 
-export const deletePlayerByPlayerid = (playerid) => axios.delete('/deletePlayerByPlayerid', { params: { playerid } });
+export const deletePlayerByPlayerid = (playerid) => axios.post('/deletePlayerByPlayerid', playerid);
 
-export const deleteGameByGameid = (gameid) => axios.delete('/deleteGameByGameid', { params: { gameid } });
+export const deleteGameByGameid = (gameid) => axios.post('/deleteGameByGameid', gameid);
 
-export const deleteRoundByRoundid = (roundid) => axios.delete('/deleteRoundByRoundid', { params: { roundid } });
+export const deleteRoundByRoundid = (roundid) => axios.post('/deleteRoundByRoundid', roundid);
 
-export const deleteStreamByStreamid = (streamid) => axios.delete('/deleteStreamByStreamid', { params: { streamid } });
+export const deleteStreamByStreamid = (streamid) => axios.post('/deleteStreamByStreamid', streamid);
 

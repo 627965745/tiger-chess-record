@@ -23,34 +23,34 @@ const ResultLineTable = ({ id }) => {
     }, []);
 
     const getTableInfo = async (id) => {
-        await getStreamTableInfo(id)
+        await getStreamTableInfo({stream_id: id})
             .then((response) => {
-                if (response.status !== 200) {
-                    console.error("获取折线图失败:", response.data.message);
-                } else {
-                    let runningTotal = 0;
-                    const dataWithAddingStakes = response.data.map((item) => {
+                let data = response.data;
+                if (data.status > 0) {
+                    console.error("unexpected:", data.message);
+                    return true;
+                }
+                let runningTotal = 0;
+                    const dataWithAddingStakes = data.data.map((item) => {
                         runningTotal += parseInt(item.total_stakes);
                         return { ...item, total_stakes: runningTotal };
                     });
                     setTableData(dataWithAddingStakes);
                     let points = [];
-                    for (let i = 1; i < response.data.length; i++) {
+                    for (let i = 1; i < data.data.length; i++) {
                         if (
-                            (response.data[i - 1].total_stakes < 0 &&
-                                response.data[i].total_stakes > 0) ||
-                            (response.data[i - 1].total_stakes > 0 &&
-                                response.data[i].total_stakes < 0)
+                            (data.data[i - 1].total_stakes < 0 &&
+                                data.data[i].total_stakes > 0) ||
+                            (data.data[i - 1].total_stakes > 0 &&
+                                data.data[i].total_stakes < 0)
                         ) {
                             points.push(i - 1);
                         }
                     }
-                    points.push(response.data.length - 1);
+                    points.push(data.data.length - 1);
                     setMarkPoints(points);
                     setLoading(false);
-                }
-            })
-            .catch((error) => console.error("获取折线图失败:", error.message));
+            });
     };
 
     const getOption = () => ({

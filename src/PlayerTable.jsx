@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from "react";
-import { useNavigate  } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useTable, useGlobalFilter } from "react-table";
 import {
     getPlayerList,
@@ -12,28 +12,25 @@ const PlayersTable = () => {
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [addingPlayer, setAddingPlayer] = useState(false);
-    let navigate  = useNavigate ();
+    let navigate = useNavigate();
     const [newPlayer, setNewPlayer] = useState({
         player_name: "",
-        player_stakes: "2",
+        player_stakes: "1",
     });
     const [editingRowId, setEditingRowId] = useState(null);
     const [originalData, setOriginalData] = useState(null);
 
     const [searchInput, setSearchInput] = useState("");
     const fetchData = async () => {
-        await getPlayerList()
-            .then((response) => {
-                if (response.status !== 200) {
-                    console.error("获取玩家列表失败:", response.data.message);
-                } else {
-                    setData(response.data);
-                    setLoading(false);
-                }
-            })
-            .catch((error) =>
-                console.error("获取物品玩家失败:", error.message)
-            );
+        await getPlayerList().then((response) => {
+            let data = response.data;
+            if (data.status > 0) {
+                console.error("unexpected:", data.message);
+                return true;
+            }
+            setData(data.data);
+            setLoading(false);
+        });
     };
 
     useEffect(() => {
@@ -152,16 +149,15 @@ const PlayersTable = () => {
 
     const updatePlayer = async (row) => {
         const playerToUpdate = data[row.index];
-        await editPlayer(playerToUpdate)
-            .then((response) => {
-                if (response.status !== 200) {
-                    console.error("修改玩家失败:", response.data.message);
-                } else {
-                    fetchData();
-                    setEditingRowId(null);
-                }
-            })
-            .catch((error) => console.error("修改玩家失败:", error.message));
+        await editPlayer(playerToUpdate).then((response) => {
+            let data = response.data;
+            if (data.status > 0) {
+                console.error("unexpected:", data.message);
+                return false;
+            }
+            fetchData();
+            setEditingRowId(null);
+        });
     };
 
     const cancelEdit = () => {
@@ -173,29 +169,27 @@ const PlayersTable = () => {
     };
 
     const addNewPlayer = async () => {
-        await addPlayer(newPlayer)
-            .then((response) => {
-                if (response.status !== 200) {
-                    console.error("添加玩家失败:", response.data.message);
-                } else {
-                    fetchData();
-                    setNewPlayer({ player_name: "", player_stakes: "2" });
-                    // setAddingPlayer(false);
-                }
-            })
-            .catch((error) => console.error("添加玩家失败:", error.message));
+        await addPlayer(newPlayer).then((response) => {
+            let data = response.data;
+            if (data.status > 0) {
+                console.error("unexpected:", data.message);
+                return false;
+            }
+            fetchData();
+            setNewPlayer({ player_name: "", player_stakes: "1" });
+            // setAddingPlayer(false);
+        });
     };
 
     const deletePlayer = async (row) => {
-        await deletePlayerByPlayerid(row.values.player_id).then((response) => {
-            if (response.status !== 200) {
-                console.error("删除玩家失败:", response.data.message);
-            } else {
-                fetchData();
+        await deletePlayerByPlayerid(row.values).then((response) => {
+            let data = response.data;
+            if (data.status > 0) {
+                console.error("unexpected:", data.message);
+                return false;
             }
-        })
-        .catch((error) => console.error("删除玩家失败:", error.message));
-        
+            fetchData();
+        });
     };
 
     if (loading) {
@@ -205,12 +199,14 @@ const PlayersTable = () => {
     return (
         <div className="grid grid-cols-4 gap-4 justify-items-center">
             <div className="col-span-4 mt-5">
-            <button
-                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                onClick={() => {navigate('/')}}
-            >
-                直播列表
-            </button>
+                <button
+                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                    onClick={() => {
+                        navigate("/");
+                    }}
+                >
+                    直播列表
+                </button>
             </div>
             <div className="col-span-4">
                 {addingPlayer ? (

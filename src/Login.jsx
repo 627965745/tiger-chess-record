@@ -6,22 +6,14 @@ const Login = ({ onLogin }) => {
     const [loginError, setLoginError] = useState("");
 
     const handleSubmit = async (e) => {
-        e.preventDefault();
-        await login(password)
-        .then((response) => {
-            if (response.data.message === "Login successful") {
-                onLogin();
-            } else if (response.data.message === "Invalid password") {
-                setLoginError("密码错误");
-            } else {
-                setLoginError("登录失败");
+        await login(password).then((response) => {
+            let data = response.data;
+            if (data.status > 0) {
+                setLoginError(data.message);
+                return true;
             }
-        })
-        .catch((error) => {
-            setLoginError("登录失败");
-            console.error("获取列表失败:", error.message);
+            onLogin();
         });
-        
     };
 
     return (

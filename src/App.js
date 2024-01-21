@@ -1,5 +1,5 @@
 import "./App.css";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { HashRouter as Router, Route, Routes } from "react-router-dom";
 import Pk from "./pk";
 import PlayerTable from "./PlayerTable";
 import Login from "./Login";
@@ -10,14 +10,14 @@ const App = () => {
     const [authenticated, setAuthenticated] = useState(false);
     const [loading, setLoading] = useState(true);
     const checkAuthStatus = async () => {
-        await checkSession()
-            .then((response) => {
-                setAuthenticated(response.data.authenticated);
-                setLoading(false);
-            })
-            .catch((error) => {
-                console.error("请先登录", error.message);
-            });
+        await checkSession().then((response) => {
+            setLoading(false);
+            let data = response.data;
+            if (data.status > 0) {
+                return true;
+            }
+            setAuthenticated(true);
+        });
     };
 
     useEffect(() => {
@@ -25,7 +25,7 @@ const App = () => {
     }, []);
     if (loading) {
         return <div>登录中...</div>;
-      }
+    }
 
     if (!authenticated) {
         return <Login onLogin={() => setAuthenticated(true)} />;

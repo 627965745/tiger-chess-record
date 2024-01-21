@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { ReactComponent as Cuo } from './utils/icons/cuo.svg';
+import { ReactComponent as Cuo } from "./utils/icons/cuo.svg";
 
 const { getPlayers, addRound, editRound } = require("./utils/apis");
 
@@ -53,17 +53,14 @@ const NewGame = ({
     }, [players]);
 
     const getAllPlayers = () => {
-        getPlayers()
-            .then((response) => {
-                if (response.status !== 200) {
-                    console.error("获取玩家列表失败:", response.data.message);
-                } else {
-                    setPlayers(response.data);
-                }
-            })
-            .catch((error) =>
-                console.error("获取物品玩家失败:", error.message)
-            );
+        getPlayers().then((response) => {
+            let data = response.data;
+            if (data.status > 0) {
+                console.error("unexpected:", data.message);
+                    return true;
+            }
+            setPlayers(data.data);
+        });
     };
 
     const selectPlayer = (player) => {
@@ -112,21 +109,20 @@ const NewGame = ({
             round_name: gameName,
             players: selectedPlayers,
         };
-        await addRound(newRoundDetail)
-            .then((response) => {
-                if (response.status !== 200) {
-                    console.error("添加失败:", response.data.message);
-                } else {
-                    scrollToDetails();
-                    getRounds();
-                    setAvailablePlayers(players);
-                    setSelectedPlayers([]);
-                    setTotalStake(0);
-                    setGameName("");
-                    toggleNewRounds();
-                }
-            })
-            .catch((error) => console.error("添加失败:", error.message));
+        await addRound(newRoundDetail).then((response) => {
+            let data = response.data;
+            if (data.status > 0) {
+                console.error("unexpected:", data.message);
+                    return true;
+            }
+            scrollToDetails();
+            getRounds();
+            setAvailablePlayers(players);
+            setSelectedPlayers([]);
+            setTotalStake(0);
+            setGameName("");
+            toggleNewRounds();
+        });
     };
 
     const editCurrentRound = async (e) => {
@@ -138,22 +134,20 @@ const NewGame = ({
             players: selectedPlayers,
             round_status: round.round_status,
         };
-        await editRound(newRoundDetail)
-            .then((response) => {
-                if (response.status !== 200) {
-                    console.error("修改失败:", response.data.message);
-                } else {
-                    scrollToDetails();
-                    setShowPlayers(false);
-                    getRounds();
-                    setAvailablePlayers(players);
-                    setSelectedPlayers([]);
-                    setTotalStake(0);
-                    setGameName("");
-                    
-                }
-            })
-            .catch((error) => console.error("修改失败:", error.message));
+        await editRound(newRoundDetail).then((response) => {
+            let data = response.data;
+            if (data.status > 0) {
+                console.error("unexpected:", data.message);
+                    return true;
+            }
+            scrollToDetails();
+            setShowPlayers(false);
+            getRounds();
+            setAvailablePlayers(players);
+            setSelectedPlayers([]);
+            setTotalStake(0);
+            setGameName("");
+        });
     };
 
     if (loading) {
@@ -255,7 +249,7 @@ const NewGame = ({
                         setGameName("");
                     }}
                 >
-                    <Cuo className="h-5 w-5 pt-2"/>
+                    <Cuo className="h-5 w-5 pt-2" />
                 </button>
             </div>
             <div className="bg-blue-200 p-1 mb-1 rounded col-span-4">
@@ -309,7 +303,10 @@ const NewGame = ({
                     <>
                         <button
                             className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded mr-2"
-                            onClick={() => {setShowPlayers(false);scrollToDetails()}}
+                            onClick={() => {
+                                setShowPlayers(false);
+                                scrollToDetails();
+                            }}
                         >
                             取消
                         </button>
